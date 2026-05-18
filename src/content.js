@@ -126,7 +126,7 @@ async function handleDownload(videoUrl, format, quality, btn, label) {
   } catch (err) {
     btn.classList.remove('tk-loading');
     btn.classList.add('tk-error');
-    btn.innerHTML = `✕ ${err.message.slice(0, 28)}`;
+    btn.textContent = `✕ ${err.message.slice(0, 28)}`;
     btn.disabled = false;
     setTimeout(() => {
       btn.classList.remove('tk-error');

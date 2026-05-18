@@ -234,12 +234,19 @@ async function fetchInfo() {
     const USER_SVG  = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
     const SHIELD_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
     resultMeta.innerHTML = '';
-    if (data.uploader) resultMeta.innerHTML += `<span class="meta-chip">${USER_SVG} ${data.uploader}</span>`;
-    if (data.duration && data.duration !== '—') resultMeta.innerHTML += `<span class="meta-chip">${CLOCK_SVG} ${data.duration}</span>`;
-    resultMeta.innerHTML += `<span class="meta-chip">${SHIELD_SVG} No watermark</span>`;
+    const makeChip = (svg, text) => {
+      const span = document.createElement('span');
+      span.className = 'meta-chip';
+      span.innerHTML = svg + ' ';
+      span.appendChild(document.createTextNode(text));
+      return span;
+    };
+    if (data.uploader) resultMeta.appendChild(makeChip(USER_SVG, data.uploader));
+    if (data.duration && data.duration !== '—') resultMeta.appendChild(makeChip(CLOCK_SVG, data.duration));
+    resultMeta.appendChild(makeChip(SHIELD_SVG, 'No watermark'));
 
-    if (data.thumbnail) {
-      resultThumb.style.backgroundImage = `url("${data.thumbnail}")`;
+    if (data.thumbnail && /^https:\/\//.test(data.thumbnail)) {
+      resultThumb.style.backgroundImage = `url("${data.thumbnail.replace(/"/g, '%22')}")`;
       resultThumb.classList.add('has-img');
     } else {
       resultThumb.style.backgroundImage = '';
