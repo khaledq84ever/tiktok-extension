@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TikGet Downloader",
   "description": "Download TikTok videos without watermark — one click, no ads.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "action": {
     "default_popup": "src/popup.html",
     "default_title": "TikGet Downloader"
@@ -30,9 +30,16 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.tiktok.com/*", "https://tiktok.com/*"],
-      "js": ["src/content.js"],
-      "css": ["src/styles/inject.css"],
+      "matches": [
+        "https://www.tiktok.com/*",
+        "https://tiktok.com/*"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "css": [
+        "src/styles/inject.css"
+      ],
       "run_at": "document_idle"
     }
   ],
